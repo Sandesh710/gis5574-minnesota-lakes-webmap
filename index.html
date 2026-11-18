@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+        content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <title>Minnesota Lakes Web Map - GIS 5574</title>
+
+  <link rel="stylesheet"
+        href="https://js.arcgis.com/4.24/esri/themes/light/main.css" />
+
+  <script src="https://js.arcgis.com/4.24/"></script>
+
+  <style>
+    html,
+    body,
+    #viewDiv {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    #viewDiv {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    #infoPanel {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 280px;
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 18px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+      font-family: Arial, sans-serif;
+      z-index: 10;
+    }
+
+    #infoPanel h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: #2c3e50;
+    }
+
+    #infoPanel p {
+      font-size: 14px;
+      line-height: 1.5;
+      color: #444;
+    }
+
+    #resetBtn {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 12px;
+      border: none;
+      border-radius: 4px;
+      background-color: #3478a5;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #resetBtn:hover {
+      background-color: #245b7c;
+    }
+
+    #infoLink {
+      display: block;
+      text-align: center;
+      font-size: 13px;
+      color: #246b91;
+      text-decoration: none;
+    }
+
+    #infoLink:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="viewDiv"></div>
+
+  <div id="infoPanel">
+    <h1>Minnesota Lakes Web Map</h1>
+
+    <p>
+      Explore physical characteristics of Minnesota lakes,
+      including maximum lake depth and other lake properties.
+    </p>
+
+    <button id="resetBtn">
+      Reset to Minnesota
+    </button>
+
+    <a href="https://www.dnr.state.mn.us/lakes/index.html"
+       target="_blank"
+       id="infoLink">
+      Minnesota DNR Lake Information
+    </a>
+  </div>
+
+  <script>
+    require(["esri/views/MapView", "esri/WebMap"], (MapView, WebMap) => {
+
+      const webmap = new WebMap({
+        portalItem: {
+          id: "3c6edc487a51412481c1015dadf8966c"
+        }
+      });
+
+      const view = new MapView({
+        map: webmap,
+        container: "viewDiv"
+      });
+
+      view.when(() => {
+        document.getElementById("resetBtn").addEventListener("click", () => {
+          view.goTo({
+            center: [-94.5, 46.1],
+            zoom: 6
+          });
+        });
+      });
+
+    });
+  </script>
+
+</body>
+</html>
